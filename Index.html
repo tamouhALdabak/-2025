@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">إنجازات 2025 - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+  
+/* Overlay */
+#timeOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 1s ease;
+}
+
+#timeOverlay.active {
+  opacity: 1;
+}
+
+/* Clock body */
+.clock {
+  width: 300px;
+  height: 300px;
+  border: 5px solid rgba(255,255,255,0.8);
+  border-radius: 50%;
+  position: relative;
+  transform: scale(0);
+  animation: clockAppear 1s ease forwards;
+}
+
+/* Hands */
+.hand {
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background: white;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 50%;
+}
+
+.hand.hour {
+  width: 35%;
+  height: 4px;
+}
+
+.center-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Animations */
+@keyframes clockAppear {
+  to { transform: scale(1); }
+}
+
+@keyframes spinFast {
+  from { transform: rotate(60deg); }
+  to   { transform: rotate(360deg); }
+}
+
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+    .achievement-card {
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    }
+    .achievement-card:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%);
+    }
+
+    .code-block {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    .code-block code {
+      color: #e2e8f0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .tech-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      font-size: 12px;
+      margin: 4px;
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      margin: 32px 0;
+    }
+
+    .tab-button {
+      padding: 12px 24px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .tab-button:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    .tab-button.active {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen">
+  <div class="max-w-7xl mx-auto p-8">
+
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="flex justify-end mb-4">
+        <button onclick="toggleLanguage()" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors">
+          <span id="langBtn">English</span>
+        </button>
+      </div>
+
+      <div class="inline-block p-4 bg-yellow-500/20 rounded-full mb-6">
+        <svg class="w-16 h-16 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+          </path>
+        </svg>
+      </div>
+
+      <h1 class="text-5xl font-bold text-white mb-4" id="mainTitle">إنجازات 2025 التقنية</h1>
+      <p class="text-xl text-blue-200" id="subtitle">نظام متقدم لاستخراج ومعالجة البيانات باستخدام Google Apps Script</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+      <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+        <div class="text-3xl font-bold text-white mb-2" id="statNum1">5</div>
+        <div class="text-blue-200" id="stat1">أنظمة ذكية</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+        <div class="text-3xl font-bold text-white mb-2" id="statNum2">80+</div>
+        <div class="text-blue-200" id="stat2">براند مكتشف</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+        <div class="text-3xl font-bold text-white mb-2" id="statNum3">100%</div>
+        <div class="text-blue-200" id="stat3">أتمتة</div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+        <div class="text-3xl font-bold text-white mb-2 cursor-pointer"
+     id="statNum4"
+     onclick="triggerLightning()">
+      ⚡
+    </div>
+    <div class="text-blue-200" id="stat4">سرعة فائقة</div>
+      </div>
+    </div>
+
+    <!-- Main Achievement -->
+    <div class="achievement-card backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-8">
+      <div class="flex items-start gap-6 mb-6">
+        <div class="flex-shrink-0">
+          <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="flex-grow">
+          <h2 class="text-3xl font-bold text-white mb-3" id="mainAchievement">🎯 نظام استخراج البيانات المتقدم في Google Sheets</h2>
+          <p class="text-blue-100 text-lg mb-4" id="mainDesc">
+            تطوير نظام متكامل وذكي لاستخراج ومعالجة بيانات المنتجات تلقائياً مع واجهة Sidebar احترافية
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tech-badge">Google Apps Script</span>
+            <span class="tech-badge">JavaScript</span>
+            <span class="tech-badge">HTML/CSS</span>
+            <span class="tech-badge">Regex</span>
+            <span class="tech-badge">Data Processing</span>
+            <span class="tech-badge">UI/UX Design</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-3 mb-6 border-b border-white/10 pb-4">
+        <button class="tab-button active" onclick="showTab('overview', this)" id="tabOverview">نظرة عامة</button>
+        <button class="tab-button" onclick="showTab('sidebar', this)" id="tabSidebar">Sidebar System</button>
+        <button class="tab-button" onclick="showTab('extraction', this)" id="tabExtraction">استخراج البيانات</button>
+        <button class="tab-button" onclick="showTab('technical', this)" id="tabTechnical">التفاصيل التقنية</button>
+        <button class="tab-button" onclick="showTab('impact', this)" id="tabImpact">الأثر</button>
+        <button class="tab-button" onclick="showTab('challenges', this)" id="tabChallenges">⚠️ التحديات</button>
+      </div>
+
+      <!-- Tab Contents -->
+      <div id="overview" class="tab-content active">
+        <h3 class="text-2xl font-bold text-white mb-4" id="ovTitle">📋 ماذا فعلت؟</h3>
+
+        <div class="space-y-4 text-blue-100">
+          <p class="text-lg" id="ovIntro">
+            قمت بتطوير <span class="highlight">نظام ذكي ومتقدم</span> يعمل داخل
+            <span class="highlight">Google Sheets</span> لأتمتة استخراج وتحليل بيانات المنتجات
+            من أوصاف غير منظمة، مع القدرة على معالجة <span class="highlight">آلاف المنتجات</span>
+            بدقة وسرعة عالية.
+          </p>
+
+          <div class="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-6 rounded-xl border border-blue-400/30">
+            <div class="font-bold text-white mb-4 text-lg" id="ovAttrTitle">✅ الـ Attributes التي يتم استخراجها تلقائياً</div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <ul class="space-y-1">
+                <li id="attr1">• العلامة التجارية (Brand)</li>
+                <li id="attr2">• رقم الموديل (Model Number)</li>
+                <li id="attr3">• الفئة / نوع المنتج (Category)</li>
+                <li id="attr4">• القدرة الكهربائية (Power)</li>
+                <li id="attr5">• السعة (Capacity)</li>
+                <li id="attr6">• الوزن (Weight)</li>
+                <li id="attr7">• الأبعاد (Dimensions)</li>
+              </ul>
+
+              <ul class="space-y-1">
+                <li id="attr8">• حجم الشاشة (Screen Size)</li>
+                <li id="attr9">• نوع الشاشة (LED / OLED / QLED)</li>
+                <li id="attr10">• عدد الدورات / السرعات</li>
+                <li id="attr11">• استهلاك الطاقة</li>
+                <li id="attr12">• اللون والمادة</li>
+                <li id="attr13">• التقنيات المدعومة (WiFi, Inverter, Smart…)</li>
+                <li id="attr14">• خصائص إضافية حسب فئة المنتج</li>
+              </ul>
+            </div>
+
+            <p class="text-blue-200 text-sm mt-4" id="ovNote">
+              💡 يتم تحديد <span class="highlight">أهم الخصائص تلقائياً</span> لكل منتج
+              بناءً على فئته، مع تجاهل المعلومات غير المهمة.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Challenges Tab -->
+      <div id="challenges" class="tab-content">
+        <h3 class="text-2xl font-bold text-white mb-4" id="chTitle">⚠️ التحديات والمشاكل</h3>
+
+        <div class="achievement-card backdrop-blur-lg rounded-xl p-6 border border-white/20 space-y-4 text-blue-100">
+          <p class="text-lg" id="chIntro">
+            أثناء العمل على معالجة بيانات المنتجات، واجهتنا تحديات حقيقية
+            أثّرت بشكل مباشر على <span class="highlight">جودة البيانات</span>
+            و<span class="highlight">سرعة الإنجاز</span>.
+          </p>
+
+          <ul class="space-y-3 text-sm leading-relaxed">
+            <li id="ch1">
+              <span class="text-white font-bold">• ضعف جودة أوصاف المنتجات:</span>
+              العديد من المنتجات القادمة من <span class="highlight">متجر الغانم</span>
+              تحتوي على أوصاف ناقصة أو عامة جداً، مما يجعل الاستخراج الآلي
+              للمواصفات التقنية غير ممكن في بعض الحالات.
+            </li>
+
+            <li id="ch2">
+              <span class="text-white font-bold">• الحاجة للبحث اليدوي:</span>
+              عند غياب المعلومات الأساسية، نضطر للبحث عن المنتج في الإنترنت
+              (مواقع الشركات، كتالوجات، متاجر أخرى) لاستخراج البيانات يدوياً،
+              وهذا يؤدي إلى <span class="highlight">وقت إضافي</span>
+              وزيادة احتمالية الأخطاء البشرية.
+            </li>
+
+            <li id="ch3">
+              <span class="text-white font-bold">• عناوين منتجات عشوائية:</span>
+              الكثير من الـ Titles تكون غير منظمة أو تحتوي معلومات مختلطة،
+              مما يصعّب تحديد <span class="highlight">رقم الموديل</span>
+              و<span class="highlight">الفئة الصحيحة</span>.
+            </li>
+          </ul>
+
+          <p class="text-blue-200 text-sm" id="chNote">
+            💡 هذه التحديات كانت السبب الرئيسي لتطوير نظام ذكي
+            قادر على التعامل مع البيانات الضعيفة، وتحليل النصوص غير المنظمة،
+            وتقليل الاعتماد على المعالجة اليدوية قدر الإمكان.
+          </p>
+        </div>
+      </div>
+
+      <div id="sidebar" class="tab-content">
+        <h3 class="text-2xl font-bold text-white mb-4" id="sbTitle">🎨 نظام Sidebar الاحترافي</h3>
+
+        <div class="bg-purple-500/10 p-6 rounded-lg border border-purple-400/30 mb-6">
+          <p class="text-yellow-300 font-bold mb-3" id="sbStar">⭐ هذا إنجاز متقدم جداً!</p>
+          <p class="text-blue-100" id="sbIntro">
+            معظم المستخدمين يستخدمون Menus بسيطة، لكني طورت <span class="highlight">Sidebar متحرك وتفاعلي</span>
+            داخل Google Sheets - وهذا يتطلب مهارات متقدمة في:
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="bg-white/5 p-4 rounded-lg">
+            <h4 class="text-white font-bold mb-2" id="sb1Title">1️⃣ التصميم التفاعلي</h4>
+            <p class="text-blue-100 text-sm mb-3" id="sb1Desc">
+              صممت واجهة مستخدم احترافية بـ HTML/CSS مع تأثيرات متحركة وألوان gradients حديثة
+            </p>
+            <div class="code-block"><code>background: linear-gradient(270deg, #1e3c72, #2a5298, #7e22ce);</code></div>
+          </div>
+
+          <div class="bg-white/5 p-4 rounded-lg">
+            <h4 class="text-white font-bold mb-2" id="sb2Title">2️⃣ نظام Stop/Resume ذكي</h4>
+            <p class="text-blue-100 text-sm mb-3" id="sb2Desc">
+              إمكانية إيقاف المعالجة بأمان أثناء التشغيل باستخدام <code class="text-green-300">PropertiesService</code>
+            </p>
+            <div class="code-block">
+              <code>function setStopFlag(value) {<br>
+  &nbsp;&nbsp;PropertiesService.getScriptProperties()<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;.setProperty(STOP_FLAG_KEY, value.toString());<br>
+}</code>
+            </div>
+          </div>
+
+          <div class="bg-white/5 p-4 rounded-lg">
+            <h4 class="text-white font-bold mb-2" id="sb3Title">3️⃣ التفاعل بين Frontend & Backend</h4>
+            <p class="text-blue-100 text-sm mb-3" id="sb3Desc">
+              ربط الواجهة بـ Google Apps Script عبر <code class="text-green-300">google.script.run</code>
+            </p>
+            <div class="code-block">
+              <code>google.script.run<br>
+  &nbsp;&nbsp;.withSuccessHandler(function(result) {...})<br>
+  &nbsp;&nbsp;.extractAttributesFromDescription();</code>
+            </div>
+          </div>
+
+          <div class="bg-white/5 p-4 rounded-lg">
+            <h4 class="text-white font-bold mb-2" id="sb4Title">4️⃣ مؤشرات حالة ديناميكية</h4>
+            <p class="text-blue-100 text-sm" id="sb4Desc">
+              رسائل وإشعارات ملونة تتغير حسب حالة العملية (Loading, Success, Error, Warning)
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="extraction" class="tab-content">
+        <h3 class="text-2xl font-bold text-white mb-4" id="exTitle">🔍 أنظمة الاستخراج الخمسة</h3>
+
+        <div class="space-y-6">
+          <!-- System 1 -->
+          <div class="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-6 rounded-lg border border-blue-400/30">
+            <h4 class="text-xl font-bold text-white mb-3" id="ex1Title">1. استخراج الـ Attributes من الوصف</h4>
+            <p class="text-blue-100 mb-4" id="ex1Desc">
+              يحلل وصف المنتج ويستخرج أكثر من <span class="highlight">50 خاصية تقنية</span> باستخدام Regular Expressions متقدمة
+            </p>
+
+            <div class="bg-black/30 p-4 rounded-lg mb-3">
+              <p class="text-white font-bold mb-2" id="ex1ExampleLabel">مثال:</p>
+              <p class="text-gray-300 text-sm mb-2" id="ex1ExampleDesc">الوصف: "غسالة سامسونج 7 كيلو 1400 دورة انفرتر"</p>
+              <p class="text-green-300 text-sm" id="ex1Arrow">↓ يستخرج تلقائياً:</p>
+              <ul class="text-blue-200 text-sm mt-2 space-y-1">
+                <li id="ex1Out1">• washing-capacity: 7 كيلو</li>
+                <li id="ex1Out2">• spin-speed: 1400 دورة</li>
+                <li id="ex1Out3">• inverter: موجود</li>
+                <li id="ex1Out4">• brand: سامسونج</li>
+              </ul>
+            </div>
+
+            <div class="code-block">
+              <code>let washCapMatch = text.match(<br>
+  &nbsp;&nbsp;/(?:سعة\s*(?:الغسيل|غسيل)|washing)[:\s]*(\d+(?:[.,]\d+)?)\s*(?:كيلو|kg)/i<br>
+);</code>
+            </div>
+          </div>
+
+          <!-- System 2 -->
+          <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 p-6 rounded-lg border border-green-400/30">
+            <h4 class="text-xl font-bold text-white mb-3" id="ex2Title">2. استخراج رقم الموديل</h4>
+            <p class="text-blue-100 mb-4" id="ex2Desc">خوارزمية ذكية لتحديد Model Number من العنوان حتى لو كان بصيغ مختلفة</p>
+
+            <div class="bg-black/30 p-4 rounded-lg mb-3">
+              <p class="text-white font-bold mb-2" id="ex2ExamplesLabel">أمثلة:</p>
+              <ul class="text-blue-200 text-sm space-y-2">
+                <li id="ex2Ex1">✓ "غسالة LG موديل F4V5RGP2T" → F4V5RGP2T</li>
+                <li id="ex2Ex2">✓ "ثلاجة سامسونج RT50K6000S8" → RT50K6000S8</li>
+                <li id="ex2Ex3">✓ "شاشة UE55AU7000" → UE55AU7000</li>
+              </ul>
+            </div>
+
+            <p class="text-blue-100 text-sm" id="ex2Note">
+              يتعامل مع <span class="highlight">جميع الصيغ</span>: أرقام وحروف مختلطة، مع شرطات، نقاط، أقواس
+            </p>
+          </div>
+
+          <!-- System 3 -->
+          <div class="bg-gradient-to-r from-pink-500/10 to-purple-500/10 p-6 rounded-lg border border-pink-400/30">
+            <h4 class="text-xl font-bold text-white mb-3" id="ex3Title">3. كشف العلامة التجارية (Brand)</h4>
+            <p class="text-blue-100 mb-4" id="ex3Desc">
+              قاعدة بيانات تحتوي على <span class="highlight">80+ براند</span> مع جميع الاحتمالات الإملائية
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4">
+              <div class="bg-white/5 p-2 rounded text-center text-sm text-blue-200" id="ex3B1">سامسونج / Samsung</div>
+              <div class="bg-white/5 p-2 rounded text-center text-sm text-blue-200" id="ex3B2">LG / ال جي</div>
+              <div class="bg-white/5 p-2 rounded text-center text-sm text-blue-200" id="ex3B3">توشيبا / Toshiba</div>
+              <div class="bg-white/5 p-2 rounded text-center text-sm text-blue-200" id="ex3B4">السيف / Alsaif</div>
+              <div class="bg-white/5 p-2 rounded text-center text-sm text-blue-200" id="ex3B5">فيليبس / Philips</div>
+              <div class="bg-white/5 p-2 rounded text-center text-sm text-blue-200" id="ex3B6">...+75 براند</div>
+            </div>
+
+            <p class="text-yellow-300 text-sm" id="ex3Note">💡 يتعامل مع الأخطاء الإملائية والصيغ المختلفة (عربي/إنجليزي)</p>
+          </div>
+
+          <!-- System 4 -->
+          <div class="bg-gradient-to-r from-orange-500/10 to-red-500/10 p-6 rounded-lg border border-orange-400/30">
+            <h4 class="text-xl font-bold text-white mb-3" id="ex4Title">4. تصنيف الفئات</h4>
+            <p class="text-blue-100 mb-4" id="ex4Desc">
+              تصنيف تلقائي لـ <span class="highlight">30+ فئة</span> بناءً على كلمات مفتاحية
+            </p>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-white/5 p-3 rounded">
+                <div class="text-white font-bold text-sm mb-2" id="ex4Detect">🔍 يكتشف:</div>
+                <ul class="text-blue-200 text-xs space-y-1">
+                  <li id="ex4D1">• غسالة / غسالة صحون</li>
+                  <li id="ex4D2">• ثلاجة / فريزر</li>
+                  <li id="ex4D3">• شاشة / تلفزيون</li>
+                  <li id="ex4D4">• مكيف / دفاية</li>
+                </ul>
+              </div>
+              <div class="bg-white/5 p-3 rounded">
+                <div class="text-white font-bold text-sm mb-2" id="ex4Smart">⚡ ذكاء إضافي:</div>
+                <ul class="text-blue-200 text-xs space-y-1">
+                  <li id="ex4S1">• يفرق بين براد ماء وثلاجة</li>
+                  <li id="ex4S2">• يميز غسالة عادية عن صحون</li>
+                  <li id="ex4S3">• يتعرف على المرادفات</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- System 5 -->
+          <div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-6 rounded-lg border border-cyan-400/30">
+            <h4 class="text-xl font-bold text-white mb-3" id="ex5Title">5. تحليل المنتجات الذكي</h4>
+            <p class="text-blue-100 mb-4" id="ex5Desc">
+              يختار <span class="highlight">أهم 3 مواصفات</span> لكل منتج حسب الفئة
+            </p>
+
+            <div class="bg-black/30 p-4 rounded-lg">
+              <p class="text-white font-bold mb-3" id="ex5Example">مثال: غسالة</p>
+              <p class="text-gray-300 text-sm mb-2" id="ex5From">
+                من بين 12 خاصية متاحة، يختار:
+              </p>
+              <ul class="text-green-300 text-sm space-y-1">
+                <li id="ex5P1">1️⃣ السعة (7 كيلو)</li>
+                <li id="ex5P2">2️⃣ عدد الدورات (1400 دورة)</li>
+                <li id="ex5P3">3️⃣ انفرتر (موجود)</li>
+              </ul>
+              <p class="text-blue-200 text-sm mt-3" id="ex5ResultLabel">↓ النتيجة النهائية:</p>
+              <p class="text-yellow-300 text-sm" id="ex5Result">"7 كيلو,1400 دورة,انفرتر"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical (single, no duplicates) -->
+      <div id="technical" class="tab-content">
+        <h3 class="text-2xl font-bold text-white mb-4" id="tTitle">⚙️ التفاصيل التقنية المتقدمة</h3>
+
+        <div class="space-y-6">
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t1Title">1. Regular Expressions متقدمة</h4>
+            <p class="text-blue-100 mb-3" id="t1Desc">استخدمت Regex patterns معقدة لدعم:</p>
+            <ul class="text-blue-200 space-y-2 text-sm">
+              <li id="t1B1">✓ اللغة العربية والإنجليزية معاً</li>
+              <li id="t1B2">✓ وحدات القياس المختلفة (واط، كيلو، ليتر، قدم، إنش...)</li>
+              <li id="t1B3">✓ الأخطاء الإملائية الشائعة</li>
+              <li id="t1B4">✓ الأرقام العشرية (مع فاصلة أو نقطة)</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t2Title">2. معالجة البيانات على دفعات</h4>
+            <p class="text-blue-100 mb-3" id="t2Desc">النظام يسمح باختيار نطاق معين:</p>
+            <div class="code-block">
+              <code>// المستخدم يختار من سطر 100 إلى 500<br>
+for (let row = startRow; row <= endRow; row++) {<br>
+  &nbsp;&nbsp;if (shouldStop()) break; // يمكن الإيقاف أثناء المعالجة<br>
+  &nbsp;&nbsp;// معالجة السطر...<br>
+}</code>
+            </div>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t3Title">3. نظام الأولويات الذكي</h4>
+            <p class="text-blue-100 mb-3" id="t3Desc">كل فئة منتج لها قائمة أولويات خاصة:</p>
+            <div class="code-block">
+              <code>const CATEGORY_PRIORITIES = {<br>
+  &nbsp;&nbsp;'شاشة': ['screen-size', 'definition', 'screen-type'],<br>
+  &nbsp;&nbsp;'غسالة': ['washing-capacity', 'spin-speed', 'power'],<br>
+  &nbsp;&nbsp;'ثلاجة': ['capacity', 'frost-free', 'inverter']<br>
+};</code>
+            </div>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t4Title">4. تحويل الأرقام للعربية</h4>
+            <p class="text-blue-100 mb-3" id="t4Desc">تحويل تلقائي للأعداد مع المفرد/المثنى/الجمع:</p>
+            <ul class="text-blue-200 text-sm space-y-1">
+              <li id="t4B1">• 1 → "سرعة واحدة"</li>
+              <li id="t4B2">• 2 → "سرعتين"</li>
+              <li id="t4B3">• 5 → "5 سرعات"</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t5Title">5. Error Handling شامل</h4>
+            <p class="text-blue-100 mb-3" id="t5Desc">النظام يتعامل مع جميع الأخطاء المحتملة:</p>
+            <ul class="text-blue-200 text-sm space-y-1">
+              <li id="t5B1">✓ صفوف فارغة</li>
+              <li id="t5B2">✓ بيانات غير صحيحة</li>
+              <li id="t5B3">✓ أعمدة مفقودة</li>
+              <li id="t5B4">✓ إيقاف مفاجئ للعملية</li>
+              <li id="t5B5">✓ معالجة حالات استثنائية (Edge Cases)</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t6Title">6. قاعدة بيانات 80+ براند</h4>
+            <p class="text-blue-100 mb-3" id="t6Desc">نظام ذكي للكشف عن العلامات التجارية مع معالجة:</p>
+            <ul class="text-blue-200 text-sm space-y-1">
+              <li id="t6B1">✓ الأخطاء الإملائية الشائعة</li>
+              <li id="t6B2">✓ النسخ العربية والإنجليزية</li>
+              <li id="t6B3">✓ التطابق الجزئي والكامل</li>
+              <li id="t6B4">✓ معالجة المسافات والرموز الخاصة</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-lg">
+            <h4 class="text-white font-bold mb-3" id="t7Title">7. نظام PropertiesService للتحكم</h4>
+            <p class="text-blue-100 mb-3" id="t7Desc">تخزين حالة العملية بشكل آمن:</p>
+            <div class="code-block">
+              <code>function setStopFlag(value) {<br>
+  &nbsp;&nbsp;PropertiesService.getScriptProperties()<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;.setProperty(STOP_FLAG_KEY, value.toString());<br>
+}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="impact" class="tab-content">
+        <h3 class="text-2xl font-bold text-white mb-4" id="impTitle">🎯 الأثر والفوائد</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-gradient-to-br from-green-500/20 to-emerald-600/20 p-6 rounded-xl border border-green-400/30">
+            <div class="text-4xl mb-3">⚡</div>
+            <h4 class="text-white font-bold mb-2 text-lg" id="imp1Title">توفير الوقت</h4>
+            <p class="text-blue-100 text-sm" id="imp1Desc">
+              ما كان يستغرق <span class="highlight">أيام من العمل اليدوي</span> أصبح يتم في <span class="highlight">دقائق معدودة</span>
+            </p>
+          </div>
+
+          <div class="bg-gradient-to-br from-blue-500/20 to-cyan-600/20 p-6 rounded-xl border border-blue-400/30">
+            <div class="text-4xl mb-3">🎯</div>
+            <h4 class="text-white font-bold mb-2 text-lg" id="imp2Title">دقة عالية</h4>
+            <p class="text-blue-100 text-sm" id="imp2Desc">
+              استخراج تلقائي بدقة <span class="highlight">95%+</span> مع معالجة ذكية للأخطاء
+            </p>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-500/20 to-pink-600/20 p-6 rounded-xl border border-purple-400/30">
+            <div class="text-4xl mb-3">📊</div>
+            <h4 class="text-white font-bold mb-2 text-lg" id="imp3Title">معالجة ضخمة</h4>
+            <p class="text-blue-100 text-sm" id="imp3Desc">
+              قادر على معالجة <span class="highlight">آلاف المنتجات</span> في وقت واحد
+            </p>
+          </div>
+
+          <div class="bg-gradient-to-br from-yellow-500/20 to-orange-600/20 p-6 rounded-xl border border-yellow-400/30">
+            <div class="text-4xl mb-3">🔄</div>
+            <h4 class="text-white font-bold mb-2 text-lg" id="imp4Title">مرونة كاملة</h4>
+            <p class="text-blue-100 text-sm" id="imp4Desc">
+              إمكانية <span class="highlight">الإيقاف والاستئناف</span> في أي وقت بأمان تام
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20 mb-6">
+          <h4 class="text-white font-bold mb-4 text-xl" id="whyTitle">💡 لماذا هذا إنجاز استثنائي؟</h4>
+
+          <div class="space-y-4">
+            <div class="flex gap-4">
+              <div class="text-2xl">1️⃣</div>
+              <div>
+                <p class="text-blue-100" id="why1">
+                  <span class="text-white font-bold">تعقيد تقني عالي:</span>
+                  الجمع بين Regex متقدمة، معالجة اللغتين، وإدارة البيانات الضخمة
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="text-2xl">2️⃣</div>
+              <div>
+                <p class="text-blue-100" id="why2">
+                  <span class="text-white font-bold">واجهة احترافية:</span>
+                  Sidebar تفاعلي نادر في Google Sheets - معظم المستخدمين يستخدمون Menus بسيطة
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="text-2xl">3️⃣</div>
+              <div>
+                <p class="text-blue-100" id="why3">
+                  <span class="text-white font-bold">ذكاء في التصنيف:</span>
+                  5 أنظمة مختلفة تعمل بتناغم لاستخراج وتحليل البيانات
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="text-2xl">4️⃣</div>
+              <div>
+                <p class="text-blue-100" id="why4">
+                  <span class="text-white font-bold">قابلية التوسع:</span>
+                  سهل إضافة براندات، فئات، أو خصائص جديدة
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-4">
+              <div class="text-2xl">5️⃣</div>
+              <div>
+                <p class="text-blue-100" id="why5">
+                  <span class="text-white font-bold">تجربة مستخدم ممتازة:</span>
+                  رسائل واضحة، تأكيدات، progress tracking، وإمكانية الإيقاف الآمن
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-yellow-500/20 to-amber-600/20 p-6 rounded-xl border border-yellow-400/30">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="text-3xl">🏆</div>
+            <h4 class="text-white font-bold text-lg" id="finalTitle">النتيجة النهائية</h4>
+          </div>
+          <p class="text-blue-100 text-sm leading-relaxed" id="finalDesc">
+            نظام متكامل يحول <span class="highlight">Google Sheets</span> من جدول بيانات بسيط إلى
+            <span class="highlight">منصة معالجة بيانات ذكية</span> قادرة على فهم، تحليل، واستخراج المعلومات
+            من آلاف المنتجات بدقة وسرعة فائقة - مع واجهة مستخدم احترافية نادراً ما تجدها في هذا النوع من التطبيقات.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Skills -->
+    <div class="achievement-card backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-8">
+      <h2 class="text-3xl font-bold text-white mb-6 text-center" id="skillsTitle">🎓 المهارات المكتسبة</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white/5 p-6 rounded-xl">
+          <h3 class="text-white font-bold mb-3 text-center" id="skillsProgTitle">💻 البرمجة</h3>
+          <div class="flex flex-wrap gap-2 justify-center">
+            <span class="tech-badge">Google Apps Script</span>
+            <span class="tech-badge">JavaScript ES6+</span>
+            <span class="tech-badge">HTML5/CSS3</span>
+          </div>
+        </div>
+
+        <div class="bg-white/5 p-6 rounded-xl">
+          <h3 class="text-white font-bold mb-3 text-center" id="skillsDesignTitle">🎨 التصميم</h3>
+          <div class="flex flex-wrap gap-2 justify-center">
+            <span class="tech-badge">Responsive Design</span>
+            <span class="tech-badge">Animations</span>
+            <span class="tech-badge">TailwindCSS</span>
+            <span class="tech-badge">Gradients</span>
+          </div>
+        </div>
+
+        <div class="bg-white/5 p-6 rounded-xl">
+          <h3 class="text-white font-bold mb-3 text-center" id="skillsTechTitle">⚙️ التقنيات</h3>
+          <div class="flex flex-wrap gap-2 justify-center">
+            <span class="tech-badge">Data Processing</span>
+            <span class="tech-badge">Error Handling</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-blue-200 mt-12">
+      <p class="text-2xl mb-4" id="footerLine1">🚀 2025 - عام الإنجازات التقنية</p>
+      <p class="text-sm opacity-75" id="footerLine2">صُنع بـ ❤️ و ☕ بواسطة Tamouh Aldabak</p>
+    </div>
+
+  </div>
+
+  <script>
+    function showTab(tabName, button) {
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      const tab = document.getElementById(tabName);
+      if (tab) tab.classList.add('active');
+      if (button) button.classList.add('active');
+    }
+
+    // Translation dictionary for ALL important text nodes
+    const I18N = {
+      ar: {
+        pageTitle: "إنجازات 2025 - Portfolio",
+        langBtn: "English",
+        mainTitle: "إنجازات 2025 التقنية",
+        subtitle: "نظام متقدم لاستخراج ومعالجة البيانات باستخدام Google Apps Script",
+        stat1: "أنظمة ذكية",
+        stat2: "براند مكتشف",
+        stat3: "أتمتة",
+        stat4: "سرعة فائقة",
+
+        mainAchievement: "🎯 نظام استخراج البيانات المتقدم في Google Sheets",
+        mainDesc: "تطوير نظام متكامل وذكي لاستخراج ومعالجة بيانات المنتجات تلقائياً مع واجهة Sidebar احترافية",
+
+        tabOverview: "نظرة عامة",
+        tabSidebar: "Sidebar System",
+        tabExtraction: "استخراج البيانات",
+        tabTechnical: "التفاصيل التقنية",
+        tabImpact: "الأثر",
+        tabChallenges: "⚠️ التحديات",
+
+        ovTitle: "📋 ماذا فعلت؟",
+        ovIntro: `قمت بتطوير <span class="highlight">نظام ذكي ومتقدم</span> يعمل داخل
+                 <span class="highlight">Google Sheets</span> لأتمتة استخراج وتحليل بيانات المنتجات
+                 من أوصاف غير منظمة، مع القدرة على معالجة <span class="highlight">آلاف المنتجات</span>
+                 بدقة وسرعة عالية.`,
+        ovAttrTitle: "✅ الـ Attributes التي يتم استخراجها تلقائياً",
+        attr1: "• العلامة التجارية (Brand)",
+        attr2: "• رقم الموديل (Model Number)",
+        attr3: "• الفئة / نوع المنتج (Category)",
+        attr4: "• القدرة الكهربائية (Power)",
+        attr5: "• السعة (Capacity)",
+        attr6: "• الوزن (Weight)",
+        attr7: "• الأبعاد (Dimensions)",
+        attr8: "• حجم الشاشة (Screen Size)",
+        attr9: "• نوع الشاشة (LED / OLED / QLED)",
+        attr10: "• عدد الدورات / السرعات",
+        attr11: "• استهلاك الطاقة",
+        attr12: "• اللون والمادة",
+        attr13: "• التقنيات المدعومة (WiFi, Inverter, Smart…)",
+        attr14: "• خصائص إضافية حسب فئة المنتج",
+        ovNote: `💡 يتم تحديد <span class="highlight">أهم الخصائص تلقائياً</span> لكل منتج
+                 بناءً على فئته، مع تجاهل المعلومات غير المهمة.`,
+
+        chTitle: "⚠️ التحديات والمشاكل",
+        chIntro: `أثناء العمل على معالجة بيانات المنتجات، واجهتنا تحديات حقيقية
+                 أثّرت بشكل مباشر على <span class="highlight">جودة البيانات</span>
+                 و<span class="highlight">سرعة الإنجاز</span>.`,
+        ch1: `<span class="text-white font-bold">• ضعف جودة أوصاف المنتجات:</span>
+              العديد من المنتجات القادمة من <span class="highlight">متجر الغانم</span>
+              تحتوي على أوصاف ناقصة أو عامة جداً، مما يجعل الاستخراج الآلي
+              للمواصفات التقنية غير ممكن في بعض الحالات.`,
+        ch2: `<span class="text-white font-bold">• الحاجة للبحث اليدوي:</span>
+              عند غياب المعلومات الأساسية، نضطر للبحث عن المنتج في الإنترنت
+              (مواقع الشركات، كتالوجات، متاجر أخرى) لاستخراج البيانات يدوياً،
+              وهذا يؤدي إلى <span class="highlight">وقت إضافي</span>
+              وزيادة احتمالية الأخطاء البشرية.`,
+        ch3: `<span class="text-white font-bold">• عناوين منتجات عشوائية:</span>
+              الكثير من الـ Titles تكون غير منظمة أو تحتوي معلومات مختلطة،
+              مما يصعّب تحديد <span class="highlight">رقم الموديل</span>
+              و<span class="highlight">الفئة الصحيحة</span>.`,
+        chNote: `💡 هذه التحديات كانت السبب الرئيسي لتطوير نظام ذكي
+                 قادر على التعامل مع البيانات الضعيفة، وتحليل النصوص غير المنظمة،
+                 وتقليل الاعتماد على المعالجة اليدوية قدر الإمكان.`,
+
+        sbTitle: "🎨 نظام Sidebar الاحترافي",
+        sbStar: "⭐ هذا إنجاز متقدم جداً!",
+        sbIntro: `معظم المستخدمين يستخدمون Menus بسيطة، لكني طورت <span class="highlight">Sidebar متحرك وتفاعلي</span>
+                  داخل Google Sheets - وهذا يتطلب مهارات متقدمة في:`,
+        sb1Title: "1️⃣ التصميم التفاعلي",
+        sb1Desc: "صممت واجهة مستخدم احترافية بـ HTML/CSS مع تأثيرات متحركة وألوان gradients حديثة",
+        sb2Title: "2️⃣ نظام Stop/Resume ذكي",
+        sb2Desc: `إمكانية إيقاف المعالجة بأمان أثناء التشغيل باستخدام <code class="text-green-300">PropertiesService</code>`,
+        sb3Title: "3️⃣ التفاعل بين Frontend & Backend",
+        sb3Desc: `ربط الواجهة بـ Google Apps Script عبر <code class="text-green-300">google.script.run</code>`,
+        sb4Title: "4️⃣ مؤشرات حالة ديناميكية",
+        sb4Desc: "رسائل وإشعارات ملونة تتغير حسب حالة العملية (Loading, Success, Error, Warning)",
+
+        exTitle: "🔍 أنظمة الاستخراج الخمسة",
+        ex1Title: "1. استخراج الـ Attributes من الوصف",
+        ex1Desc: `يحلل وصف المنتج ويستخرج أكثر من <span class="highlight">50 خاصية تقنية</span> باستخدام Regular Expressions متقدمة`,
+        ex1ExampleLabel: "مثال:",
+        ex1ExampleDesc: `الوصف: "غسالة سامسونج 7 كيلو 1400 دورة انفرتر"`,
+        ex1Arrow: "↓ يستخرج تلقائياً:",
+        ex1Out1: "• washing-capacity: 7 كيلو",
+        ex1Out2: "• spin-speed: 1400 دورة",
+        ex1Out3: "• inverter: موجود",
+        ex1Out4: "• brand: سامسونج",
+
+        ex2Title: "2. استخراج رقم الموديل",
+        ex2Desc: "خوارزمية ذكية لتحديد Model Number من العنوان حتى لو كان بصيغ مختلفة",
+        ex2ExamplesLabel: "أمثلة:",
+        ex2Ex1: `✓ "غسالة LG موديل F4V5RGP2T" → F4V5RGP2T`,
+        ex2Ex2: `✓ "ثلاجة سامسونج RT50K6000S8" → RT50K6000S8`,
+        ex2Ex3: `✓ "شاشة UE55AU7000" → UE55AU7000`,
+        ex2Note: `يتعامل مع <span class="highlight">جميع الصيغ</span>: أرقام وحروف مختلطة، مع شرطات، نقاط، أقواس`,
+
+        ex3Title: "3. كشف العلامة التجارية (Brand)",
+        ex3Desc: `قاعدة بيانات تحتوي على <span class="highlight">80+ براند</span> مع جميع الاحتمالات الإملائية`,
+        ex3B1: "سامسونج / Samsung",
+        ex3B2: "LG / ال جي",
+        ex3B3: "توشيبا / Toshiba",
+        ex3B4: "السيف / Alsaif",
+        ex3B5: "فيليبس / Philips",
+        ex3B6: "...+75 براند",
+        ex3Note: "💡 يتعامل مع الأخطاء الإملائية والصيغ المختلفة (عربي/إنجليزي)",
+
+        ex4Title: "4. تصنيف الفئات",
+        ex4Desc: `تصنيف تلقائي لـ <span class="highlight">30+ فئة</span> بناءً على كلمات مفتاحية`,
+        ex4Detect: "🔍 يكتشف:",
+        ex4D1: "• غسالة / غسالة صحون",
+        ex4D2: "• ثلاجة / فريزر",
+        ex4D3: "• شاشة / تلفزيون",
+        ex4D4: "• مكيف / دفاية",
+        ex4Smart: "⚡ ذكاء إضافي:",
+        ex4S1: "• يفرق بين براد ماء وثلاجة",
+        ex4S2: "• يميز غسالة عادية عن صحون",
+        ex4S3: "• يتعرف على المرادفات",
+
+        ex5Title: "5. تحليل المنتجات الذكي",
+        ex5Desc: `يختار <span class="highlight">أهم 3 مواصفات</span> لكل منتج حسب الفئة`,
+        ex5Example: "مثال: غسالة",
+        ex5From: "من بين 12 خاصية متاحة، يختار:",
+        ex5P1: "1️⃣ السعة (7 كيلو)",
+        ex5P2: "2️⃣ عدد الدورات (1400 دورة)",
+        ex5P3: "3️⃣ انفرتر (موجود)",
+        ex5ResultLabel: "↓ النتيجة النهائية:",
+        ex5Result: `"7 كيلو,1400 دورة,انفرتر"`,
+
+        tTitle: "⚙️ التفاصيل التقنية المتقدمة",
+        t1Title: "1. Regular Expressions متقدمة",
+        t1Desc: "استخدمت Regex patterns معقدة لدعم:",
+        t1B1: "✓ اللغة العربية والإنجليزية معاً",
+        t1B2: "✓ وحدات القياس المختلفة (واط، كيلو، ليتر، قدم، إنش...)",
+        t1B3: "✓ الأخطاء الإملائية الشائعة",
+        t1B4: "✓ الأرقام العشرية (مع فاصلة أو نقطة)",
+
+        t2Title: "2. معالجة البيانات على دفعات",
+        t2Desc: "النظام يسمح باختيار نطاق معين:",
+        t3Title: "3. نظام الأولويات الذكي",
+        t3Desc: "كل فئة منتج لها قائمة أولويات خاصة:",
+        t4Title: "4. تحويل الأرقام للعربية",
+        t4Desc: "تحويل تلقائي للأعداد مع المفرد/المثنى/الجمع:",
+        t4B1: `• 1 → "سرعة واحدة"`,
+        t4B2: `• 2 → "سرعتين"`,
+        t4B3: `• 5 → "5 سرعات"`,
+
+        t5Title: "5. Error Handling شامل",
+        t5Desc: "النظام يتعامل مع جميع الأخطاء المحتملة:",
+        t5B1: "✓ صفوف فارغة",
+        t5B2: "✓ بيانات غير صحيحة",
+        t5B3: "✓ أعمدة مفقودة",
+        t5B4: "✓ إيقاف مفاجئ للعملية",
+        t5B5: "✓ معالجة حالات استثنائية (Edge Cases)",
+
+        t6Title: "6. قاعدة بيانات 80+ براند",
+        t6Desc: "نظام ذكي للكشف عن العلامات التجارية مع معالجة:",
+        t6B1: "✓ الأخطاء الإملائية الشائعة",
+        t6B2: "✓ النسخ العربية والإنجليزية",
+        t6B3: "✓ التطابق الجزئي والكامل",
+        t6B4: "✓ معالجة المسافات والرموز الخاصة",
+
+        t7Title: "7. نظام PropertiesService للتحكم",
+        t7Desc: "تخزين حالة العملية بشكل آمن:",
+
+        impTitle: "🎯 الأثر والفوائد",
+        imp1Title: "توفير الوقت",
+        imp1Desc: `ما كان يستغرق <span class="highlight">أيام من العمل اليدوي</span> أصبح يتم في <span class="highlight">دقائق معدودة</span>`,
+        imp2Title: "دقة عالية",
+        imp2Desc: `استخراج تلقائي بدقة <span class="highlight">95%+</span> مع معالجة ذكية للأخطاء`,
+        imp3Title: "معالجة ضخمة",
+        imp3Desc: `قادر على معالجة <span class="highlight">آلاف المنتجات</span> في وقت واحد`,
+        imp4Title: "مرونة كاملة",
+        imp4Desc: `إمكانية <span class="highlight">الإيقاف والاستئناف</span> في أي وقت بأمان تام`,
+
+        whyTitle: "💡 لماذا هذا إنجاز استثنائي؟",
+        why1: `<span class="text-white font-bold">تعقيد تقني عالي:</span> الجمع بين Regex متقدمة، معالجة اللغتين، وإدارة البيانات الضخمة`,
+        why2: `<span class="text-white font-bold">واجهة احترافية:</span> Sidebar تفاعلي نادر في Google Sheets - معظم المستخدمين يستخدمون Menus بسيطة`,
+        why3: `<span class="text-white font-bold">ذكاء في التصنيف:</span> 5 أنظمة مختلفة تعمل بتناغم لاستخراج وتحليل البيانات`,
+        why4: `<span class="text-white font-bold">قابلية التوسع:</span> سهل إضافة براندات، فئات، أو خصائص جديدة`,
+        why5: `<span class="text-white font-bold">تجربة مستخدم ممتازة:</span> رسائل واضحة، تأكيدات، progress tracking، وإمكانية الإيقاف الآمن`,
+
+        finalTitle: "النتيجة النهائية",
+        finalDesc: `نظام متكامل يحول <span class="highlight">Google Sheets</span> من جدول بيانات بسيط إلى
+                   <span class="highlight">منصة معالجة بيانات ذكية</span> قادرة على فهم، تحليل، واستخراج المعلومات
+                   من آلاف المنتجات بدقة وسرعة فائقة - مع واجهة مستخدم احترافية نادراً ما تجدها في هذا النوع من التطبيقات.`,
+
+        skillsTitle: "🎓 المهارات المكتسبة",
+        skillsProgTitle: "💻 البرمجة",
+        skillsDesignTitle: "🎨 التصميم",
+        skillsTechTitle: "⚙️ التقنيات",
+
+        footerLine1: "🚀 2025 - عام الإنجازات التقنية",
+        footerLine2: "صُنع بـ واسطة Tamouh Aldabak",
+      },
+
+      en: {
+        pageTitle: "Achievements 2025 - Portfolio",
+        langBtn: "العربية",
+        mainTitle: "Technical Achievements 2025",
+        subtitle: "Advanced Data Extraction & Processing System using Google Apps Script",
+        stat1: "Smart Systems",
+        stat2: "Brands Detected",
+        stat3: "Automation",
+        stat4: "Super Fast",
+
+        mainAchievement: "🎯 Advanced Data Extraction System in Google Sheets",
+        mainDesc: "Developed a complete, intelligent system to automatically extract and process product data with a professional Sidebar UI",
+
+        tabOverview: "Overview",
+        tabSidebar: "Sidebar System",
+        tabExtraction: "Data Extraction",
+        tabTechnical: "Technical Details",
+        tabImpact: "Impact",
+        tabChallenges: "⚠️ Challenges",
+
+        ovTitle: "📋 What did I build?",
+        ovIntro: `I built an <span class="highlight">advanced intelligent system</span> inside
+                 <span class="highlight">Google Sheets</span> to automate extraction and analysis of product data
+                 from unstructured descriptions, capable of processing <span class="highlight">thousands of products</span>
+                 with high accuracy and speed.`,
+        ovAttrTitle: "✅ Attributes extracted automatically",
+        attr1: "• Brand",
+        attr2: "• Model Number",
+        attr3: "• Category / Product Type",
+        attr4: "• Power (Wattage)",
+        attr5: "• Capacity",
+        attr6: "• Weight",
+        attr7: "• Dimensions",
+        attr8: "• Screen Size",
+        attr9: "• Screen Type (LED / OLED / QLED)",
+        attr10: "• Spins / Speeds / RPM",
+        attr11: "• Energy Consumption",
+        attr12: "• Color & Material",
+        attr13: "• Supported Technologies (WiFi, Inverter, Smart…)",
+        attr14: "• Extra attributes per category",
+        ovNote: `💡 The system automatically selects <span class="highlight">the most important attributes</span> for each product
+                 based on its category and ignores non-essential details.`,
+
+        chTitle: "⚠️ Challenges & Constraints",
+        chIntro: `While processing product data, we faced real challenges that directly impacted
+                 <span class="highlight">data quality</span> and <span class="highlight">delivery speed</span>.`,
+        ch1: `<span class="text-white font-bold">• Weak product descriptions:</span>
+              Many items coming from <span class="highlight">Alghanim store</span> have incomplete or overly generic descriptions,
+              making automated specification extraction impossible in some cases.`,
+        ch2: `<span class="text-white font-bold">• Manual online research:</span>
+              When key specs are missing, we must search online (brands’ sites, manuals, other retailers)
+              to extract specs manually, resulting in <span class="highlight">extra time</span> and higher risk of human error.`,
+        ch3: `<span class="text-white font-bold">• Random / inconsistent titles:</span>
+              Titles are often unstructured or contain mixed information, which makes identifying
+              <span class="highlight">model numbers</span> and the <span class="highlight">correct category</span> harder.`,
+        chNote: `💡 These challenges were the main reason behind building a smart system that can handle weak data,
+                 parse unstructured text, and minimize manual work as much as possible.`,
+
+        sbTitle: "🎨 Professional Sidebar System",
+        sbStar: "⭐ This is an advanced achievement!",
+        sbIntro: `Most users rely on simple menus, but I built a <span class="highlight">dynamic, interactive Sidebar</span>
+                  inside Google Sheets—requiring advanced skills in:`,
+        sb1Title: "1️⃣ Interactive UI design",
+        sb1Desc: "Designed a modern UI using HTML/CSS with animations and contemporary gradient styling",
+        sb2Title: "2️⃣ Smart Stop/Resume system",
+        sb2Desc: `Safe pause/resume during processing using <code class="text-green-300">PropertiesService</code>`,
+        sb3Title: "3️⃣ Frontend ↔ Backend integration",
+        sb3Desc: `Connected UI to Apps Script using <code class="text-green-300">google.script.run</code>`,
+        sb4Title: "4️⃣ Dynamic status indicators",
+        sb4Desc: "Color-coded messages that reflect process state (Loading, Success, Error, Warning)",
+
+        exTitle: "🔍 Five Extraction Systems",
+        ex1Title: "1. Attribute extraction from description",
+        ex1Desc: `Parses product descriptions and extracts <span class="highlight">50+ technical attributes</span> using advanced Regular Expressions`,
+        ex1ExampleLabel: "Example:",
+        ex1ExampleDesc: `Description: "Samsung washer 7 kg 1400 RPM inverter"`,
+        ex1Arrow: "↓ Automatically extracts:",
+        ex1Out1: "• washing-capacity: 7 kg",
+        ex1Out2: "• spin-speed: 1400 RPM",
+        ex1Out3: "• inverter: present",
+        ex1Out4: "• brand: Samsung",
+
+        ex2Title: "2. Model number extraction",
+        ex2Desc: "A smart algorithm that detects model numbers from titles even with different formats",
+        ex2ExamplesLabel: "Examples:",
+        ex2Ex1: `✓ "LG Washer Model F4V5RGP2T" → F4V5RGP2T`,
+        ex2Ex2: `✓ "Samsung Fridge RT50K6000S8" → RT50K6000S8`,
+        ex2Ex3: `✓ "TV UE55AU7000" → UE55AU7000`,
+        ex2Note: `Handles <span class="highlight">all formats</span>: alphanumeric, dashes, dots, brackets, and variants`,
+
+        ex3Title: "3. Brand detection",
+        ex3Desc: `A database of <span class="highlight">80+ brands</span> with spelling variants (Arabic/English + common typos)`,
+        ex3B1: "Samsung / سامسونج",
+        ex3B2: "LG / ال جي",
+        ex3B3: "Toshiba / توشيبا",
+        ex3B4: "Alsaif / السيف",
+        ex3B5: "Philips / فيليبس",
+        ex3B6: "...+75 brands",
+        ex3Note: "💡 Supports misspellings and Arabic/English variants",
+
+        ex4Title: "4. Category classification",
+        ex4Desc: `Auto-classifies <span class="highlight">30+ categories</span> based on keyword intelligence`,
+        ex4Detect: "🔍 Detects:",
+        ex4D1: "• Washer / Dishwasher",
+        ex4D2: "• Fridge / Freezer",
+        ex4D3: "• TV / Display",
+        ex4D4: "• AC / Heater",
+        ex4Smart: "⚡ Extra intelligence:",
+        ex4S1: "• Distinguishes water cooler vs fridge",
+        ex4S2: "• Separates washer vs dishwasher",
+        ex4S3: "• Understands synonyms",
+
+        ex5Title: "5. Smart product summarization",
+        ex5Desc: `Selects the <span class="highlight">top 3 specs</span> per category`,
+        ex5Example: "Example: Washer",
+        ex5From: "From many available attributes, it chooses:",
+        ex5P1: "1️⃣ Capacity (7 kg)",
+        ex5P2: "2️⃣ Spin speed (1400 RPM)",
+        ex5P3: "3️⃣ Inverter (present)",
+        ex5ResultLabel: "↓ Final output:",
+        ex5Result: `"7 kg, 1400 RPM, Inverter"`,
+
+        tTitle: "⚙️ Advanced Technical Details",
+        t1Title: "1. Advanced Regular Expressions",
+        t1Desc: "Built complex regex patterns to support:",
+        t1B1: "✓ Arabic + English together",
+        t1B2: "✓ Multiple measurement units (W, kg, L, ft, inch...)",
+        t1B3: "✓ Common spelling mistakes",
+        t1B4: "✓ Decimal numbers (comma or dot)",
+
+        t2Title: "2. Batch processing",
+        t2Desc: "Allows selecting specific row ranges for processing:",
+        t3Title: "3. Smart priority system",
+        t3Desc: "Each product category has a dedicated priority list:",
+        t4Title: "4. Arabic number wording",
+        t4Desc: "Automatic conversion with singular/dual/plural forms:",
+        t4B1: `• 1 → "one speed"`,
+        t4B2: `• 2 → "two speeds"`,
+        t4B3: `• 5 → "5 speeds"`,
+
+        t5Title: "5. Comprehensive error handling",
+        t5Desc: "Safely handles common failure cases:",
+        t5B1: "✓ Empty rows",
+        t5B2: "✓ Invalid data",
+        t5B3: "✓ Missing columns",
+        t5B4: "✓ Unexpected interruption",
+        t5B5: "✓ Edge cases & exceptions",
+
+        t6Title: "6. 80+ brand database",
+        t6Desc: "Brand detection system that handles:",
+        t6B1: "✓ Common typos",
+        t6B2: "✓ Arabic/English variants",
+        t6B3: "✓ Partial/full matching",
+        t6B4: "✓ Spaces & special characters",
+
+        t7Title: "7. PropertiesService state control",
+        t7Desc: "Safely stores process state and flags:",
+
+        impTitle: "🎯 Impact & Benefits",
+        imp1Title: "Time savings",
+        imp1Desc: `Work that used to take <span class="highlight">days</span> is now completed in <span class="highlight">minutes</span>`,
+        imp2Title: "High accuracy",
+        imp2Desc: `Automated extraction with <span class="highlight">95%+</span> accuracy and smart error handling`,
+        imp3Title: "Large-scale processing",
+        imp3Desc: `Processes <span class="highlight">thousands of products</span> in one run`,
+        imp4Title: "Full flexibility",
+        imp4Desc: `Safe <span class="highlight">stop & resume</span> at any time`,
+
+        whyTitle: "💡 Why is this exceptional?",
+        why1: `<span class="text-white font-bold">High technical complexity:</span> combines advanced regex, bilingual parsing, and large-scale data processing`,
+        why2: `<span class="text-white font-bold">Professional UI:</span> a rare interactive Sidebar inside Google Sheets (most use simple menus)`,
+        why3: `<span class="text-white font-bold">Classification intelligence:</span> five coordinated systems working together`,
+        why4: `<span class="text-white font-bold">Scalable design:</span> easy to extend brands, categories, and attributes`,
+        why5: `<span class="text-white font-bold">Great UX:</span> clear messages, confirmations, progress tracking, and safe stop controls`,
+
+        finalTitle: "Final outcome",
+        finalDesc: `A complete system that turns <span class="highlight">Google Sheets</span> from a simple spreadsheet into a
+                   <span class="highlight">smart data processing platform</span> capable of understanding, analyzing, and extracting information
+                   from thousands of products with speed and accuracy—paired with a professional UI rarely seen in this space.`,
+
+        skillsTitle: "🎓 Skills Acquired",
+        skillsProgTitle: "💻 Programming",
+        skillsDesignTitle: "🎨 Design",
+        skillsTechTitle: "⚙️ Technologies",
+
+        footerLine1: "🚀 2025 — A year of technical achievements",
+        footerLine2: "Made By Tamouh Aldabak",
+      }
+    };
+
+    const TEXT_IDS = [
+      "pageTitle","langBtn","mainTitle","subtitle","stat1","stat2","stat3","stat4",
+      "mainAchievement","mainDesc",
+      "tabOverview","tabSidebar","tabExtraction","tabTechnical","tabImpact","tabChallenges",
+      "ovTitle","ovIntro","ovAttrTitle","attr1","attr2","attr3","attr4","attr5","attr6","attr7","attr8","attr9","attr10","attr11","attr12","attr13","attr14","ovNote",
+      "chTitle","chIntro","ch1","ch2","ch3","chNote",
+      "sbTitle","sbStar","sbIntro","sb1Title","sb1Desc","sb2Title","sb2Desc","sb3Title","sb3Desc","sb4Title","sb4Desc",
+      "exTitle","ex1Title","ex1Desc","ex1ExampleLabel","ex1ExampleDesc","ex1Arrow","ex1Out1","ex1Out2","ex1Out3","ex1Out4",
+      "ex2Title","ex2Desc","ex2ExamplesLabel","ex2Ex1","ex2Ex2","ex2Ex3","ex2Note",
+      "ex3Title","ex3Desc","ex3B1","ex3B2","ex3B3","ex3B4","ex3B5","ex3B6","ex3Note",
+      "ex4Title","ex4Desc","ex4Detect","ex4D1","ex4D2","ex4D3","ex4D4","ex4Smart","ex4S1","ex4S2","ex4S3",
+      "ex5Title","ex5Desc","ex5Example","ex5From","ex5P1","ex5P2","ex5P3","ex5ResultLabel","ex5Result",
+      "tTitle","t1Title","t1Desc","t1B1","t1B2","t1B3","t1B4",
+      "t2Title","t2Desc","t3Title","t3Desc","t4Title","t4Desc","t4B1","t4B2","t4B3",
+      "t5Title","t5Desc","t5B1","t5B2","t5B3","t5B4","t5B5",
+      "t6Title","t6Desc","t6B1","t6B2","t6B3","t6B4",
+      "t7Title","t7Desc",
+      "impTitle","imp1Title","imp1Desc","imp2Title","imp2Desc","imp3Title","imp3Desc","imp4Title","imp4Desc",
+      "whyTitle","why1","why2","why3","why4","why5",
+      "finalTitle","finalDesc",
+      "skillsTitle","skillsProgTitle","skillsDesignTitle","skillsTechTitle",
+      "footerLine1","footerLine2"
+    ];
+
+    function applyLanguage(lang) {
+      // html lang/dir
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+
+      // update all mapped nodes
+      TEXT_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const value = I18N[lang][id];
+        if (value === undefined) return;
+
+        // Keep HTML formatting where needed
+        const htmlPreferred = [
+          "ovIntro","ovNote",
+          "chIntro","ch1","ch2","ch3","chNote",
+          "sbIntro","sb2Desc","sb3Desc",
+          "ex1Desc","ex2Note","ex3Desc","ex4Desc","ex5Desc",
+          "imp1Desc","imp2Desc","imp3Desc","imp4Desc",
+          "why1","why2","why3","why4","why5",
+          "finalDesc"
+        ].includes(id);
+
+        if (id === "pageTitle") {
+          document.title = value;
+        } else if (id === "langBtn") {
+          el.textContent = value;
+        } else if (htmlPreferred) {
+          el.innerHTML = value;
+        } else {
+          el.textContent = value;
+        }
+      });
+    }
+
+    function toggleLanguage() {
+      const current = document.documentElement.lang || "ar";
+      const next = (current === "ar") ? "en" : "ar";
+      applyLanguage(next);
+    }
+
+    // init (Arabic default)
+    applyLanguage("ar");
+  </script>
+<div id="timeOverlay">
+  <div class="clock">
+    <div class="hand hour"></div>
+    <div class="hand minute"></div>
+    <div class="center-dot"></div>
+  </div>
+</div>
+<script>
+function triggerLightning() {
+  const overlay = document.getElementById("timeOverlay");
+  const hour = overlay.querySelector(".hour");
+  const minute = overlay.querySelector(".minute");
+
+  // إظهار الشاشة
+  overlay.classList.add("active");
+
+  // إعادة ضبط
+  hour.style.animation = "none";
+  minute.style.animation = "none";
+
+  // Force reflow
+  void hour.offsetWidth;
+
+  // دوران سريع
+  hour.style.animation = "spinFast 2s linear";
+  minute.style.animation = "spinFast 1s linear";
+
+  // إخفاء كل شيء
+  setTimeout(() => {
+    overlay.classList.remove("active");
+  }, 2000);
+}
+</script>
+</body>
+</html>
